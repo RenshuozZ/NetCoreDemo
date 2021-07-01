@@ -18,10 +18,12 @@ namespace ReadAppsetttingConfig.Controllers
      
         private readonly IOptions<MySettingsConfiguration> _optionsSetting;
         private readonly IOptionsSnapshot<MySettingsConfiguration> _optionsSnapshotSetting;
-        public GetSectionOptionController( IConfiguration configuration, IOptions<MySettingsConfiguration> optionsSetting,IOptionsSnapshot<MySettingsConfiguration> optionsSnapshotSetting)
+        private readonly IOptionsMonitor<MySettingsConfiguration> _optionsMonitorSetting;
+        public GetSectionOptionController(IOptions<MySettingsConfiguration> optionsSetting,IOptionsSnapshot<MySettingsConfiguration> optionsSnapshotSetting, IOptionsMonitor<MySettingsConfiguration> optionsMonitorSetting)
         {
             _optionsSnapshotSetting = optionsSnapshotSetting;
             _optionsSetting = optionsSetting;
+            _optionsMonitorSetting = optionsMonitorSetting;
         }
 
         [HttpGet("section_option")]

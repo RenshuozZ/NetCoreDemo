@@ -8,6 +8,7 @@ namespace ReadAppsetttingConfig
 {
     public sealed class MySettingsConfiguration
     {
+        public const string AppSettings = "AppSettings";
         public string SettingConfig { get; set; }
         public MyProjectConfig MyProjectConfig { get; set; }
     }

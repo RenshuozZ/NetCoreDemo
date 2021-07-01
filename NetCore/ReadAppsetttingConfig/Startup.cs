@@ -29,12 +29,12 @@ namespace ReadAppsetttingConfig
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.Configure<MySettingsConfiguration>(Configuration.GetSection("AppSettings"));
+            services.Configure<MySettingsConfiguration>(Configuration.GetSection(MySettingsConfiguration.AppSettings));
 
 
-            var mySettings = new MySettingsConfiguration();
-            new ConfigureFromConfigurationOptions<MySettingsConfiguration>(Configuration.GetSection("AppSettings")).Configure(mySettings);
-            services.AddSingleton(mySettings);
+            //var mySettings = new MySettingsConfiguration();
+            //new ConfigureFromConfigurationOptions<MySettingsConfiguration>(Configuration.GetSection(MySettingsConfiguration.AppSettings)).Configure(mySettings);
+            //services.AddSingleton(mySettings);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
