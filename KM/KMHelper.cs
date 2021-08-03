@@ -4,36 +4,36 @@
     using System.Collections.Generic;
     //https://blog.csdn.net/chenshibo17/article/details/79933191
 
-    public enum TaskTypeEnum
+    public enum TaskRoleTypeEnum
     {
         IOL = 1,
         VCS = 2,
         EOR = 3,
         JP3 = 4,
     }
-    public class TaskModel
+    public class MatchTaskModel
     {
-        public TaskModel(TaskTypeEnum taskTypeEnum, int weight)
+        public MatchTaskModel(TaskRoleTypeEnum taskTypeEnum, int weight)
         {
             TaskType = taskTypeEnum;
             Weight = weight;
         }
-        public TaskTypeEnum TaskType { get; set; }
+        public TaskRoleTypeEnum TaskType { get; set; }
         public int Weight { get; set; }
     }
-    public class ExaminerModel
+    public class MatchExaminerModel
     {
-        public ExaminerModel(string examinerNo,params TaskTypeEnum[] availableTaskTypes)
+        public MatchExaminerModel(string examinerNo,params TaskRoleTypeEnum[] availableTaskTypes)
         {
             AvailableTaskTypes = availableTaskTypes;
             ExaminerNo = examinerNo;
         }
-        public TaskTypeEnum[] AvailableTaskTypes { get; set; }
+        public TaskRoleTypeEnum[] AvailableTaskTypes { get; set; }
         public string ExaminerNo { get; set; }
     }
     public static class KMHelper
     {
-        public static readonly int TaskCount = 2;
+        public static readonly int TaskCount = 6;
         public static readonly int INF = 0x3f3f3f3f;
         public static int[][] match_weight = RectangularIntArray(TaskCount, TaskCount); // 记录每个任务和每个考官的权重
         public static int[] ex_task = new int[TaskCount]; // 每个任务的期望值
@@ -177,13 +177,13 @@
             return;
         }
 
-        public static void GenerateMatchWeight(List<TaskModel> taskModels, List<ExaminerModel> examinerModels)
+        public static void GenerateMatchWeight(List<MatchTaskModel> taskModels, List<MatchExaminerModel> examinerModels)
         {
             for (int i = 0; i < taskModels.Count; i++)
             {
                 for (int j = 0; j < examinerModels.Count; j++)
                 {
-                    match_weight[i][j] = 0;
+                    match_weight[i][j] = -100;
                     if (Array.IndexOf(examinerModels[j].AvailableTaskTypes, taskModels[i].TaskType) >= 0)
                     {
                         match_weight[i][j] = taskModels[i].Weight;

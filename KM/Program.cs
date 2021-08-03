@@ -11,26 +11,34 @@ namespace KM
             // 初始化数据
 
             //love[i][j] = int.Parse(tempVar);
-            var tasks = new List<TaskModel>();
-            var examiners = new List<ExaminerModel>();
+            var tasks = new List<MatchTaskModel>();
+            var examiners = new List<MatchExaminerModel>();
 
-            tasks.Add(new TaskModel(TaskTypeEnum.IOL, 31));
-            tasks.Add(new TaskModel(TaskTypeEnum.VCS, 21));
-            //tasks.Add(new TaskModel(TaskTypeEnum.VCS, 22));
-            //tasks.Add(new TaskModel(TaskTypeEnum.IOL, 32));
-            //tasks.Add(new TaskModel(TaskTypeEnum.EOR, 11));
-            //tasks.Add(new TaskModel(TaskTypeEnum.EOR, 12));
 
-            //examiners.Add(new ExaminerModel("1", TaskTypeEnum.IOL, TaskTypeEnum.VCS));
-            //examiners.Add(new ExaminerModel("2", TaskTypeEnum.IOL, TaskTypeEnum.VCS, TaskTypeEnum.EOR));
-            //examiners.Add(new ExaminerModel("3", TaskTypeEnum.IOL));
-            //examiners.Add(new ExaminerModel("4", TaskTypeEnum.VCS));
-            examiners.Add(new ExaminerModel("5", TaskTypeEnum.IOL));
-            examiners.Add(new ExaminerModel("6", TaskTypeEnum.EOR));
+            tasks.Add(new MatchTaskModel(TaskRoleTypeEnum.IOL, 31));
+            tasks.Add(new MatchTaskModel(TaskRoleTypeEnum.VCS, 21));
+            tasks.Add(new MatchTaskModel(TaskRoleTypeEnum.VCS, 22));
+            tasks.Add(new MatchTaskModel(TaskRoleTypeEnum.IOL, 32));
+            tasks.Add(new MatchTaskModel(TaskRoleTypeEnum.EOR, 13));
+            tasks.Add(new MatchTaskModel(TaskRoleTypeEnum.EOR, 12));
+
+            examiners.Add(new MatchExaminerModel("1", TaskRoleTypeEnum.IOL, TaskRoleTypeEnum.VCS));
+            examiners.Add(new MatchExaminerModel("2", TaskRoleTypeEnum.IOL, TaskRoleTypeEnum.VCS, TaskRoleTypeEnum.EOR));
+            examiners.Add(new MatchExaminerModel("3", TaskRoleTypeEnum.IOL));
+            examiners.Add(new MatchExaminerModel("4", TaskRoleTypeEnum.VCS));
+            examiners.Add(new MatchExaminerModel("5", TaskRoleTypeEnum.IOL));
+            examiners.Add(new MatchExaminerModel("6", TaskRoleTypeEnum.VCS));
 
             KMHelper.GenerateMatchWeight(tasks, examiners);
             Console.Write("{0:D}\n", KMHelper.KM());
-            var a = KMHelper.match;
+            var match = KMHelper.match;
+            for (int i = 0; i < match.Length; i++)
+            {
+                if(Array.IndexOf(examiners[i].AvailableTaskTypes, tasks[match[i]].TaskType) < 0)
+                {
+                    match[i] = -1;
+                }
+            }
             Console.Read();
         }
     }
